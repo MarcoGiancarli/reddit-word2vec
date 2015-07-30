@@ -1,3 +1,7 @@
+# ignore unformatted data
+res/comments/
+res/language-modeling-benchmark/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
