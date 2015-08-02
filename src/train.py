@@ -2,7 +2,7 @@ __author__ = 'Marco Giancarli -- m.a.giancarli@gmail.com'
 
 
 from nltk import tokenize
-import word2vec
+from gensim.models import word2vec
 import os
 
 
@@ -13,8 +13,7 @@ lmb_training_dir = 'res/language-modeling-benchmark/training/'
 
 def main():
     # make_training_file()
-    phrases()
-    vectors()
+    train()
 
 
 def make_training_file():
@@ -70,21 +69,14 @@ def comment_to_sentences(comment_line):
     return sentences
 
 
-def phrases():
-    word2vec.word2phrase(
-        'res/text',
-        'res/text-phrases',
-        verbose=True,
-    )
-
-
-def vectors():
-    word2vec.word2vec(
-        'res/text-phrases',
-        'res/text.bin',
-        size=100,
-        verbose=True,
-    )
+def train():
+    with open('res/text', 'r') as train_file:
+        model = word2vec.Word2Vec(
+            sentences=train_file,
+            min_count=20,
+            workers=4,
+        )
+    model.save('text-no-phrases.bin')
 
 
 if __name__ == '__main__':
