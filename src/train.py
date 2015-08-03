@@ -77,7 +77,6 @@ def train():
         model = word2vec.Word2Vec(
             sentences=choo_choo_train.next(),
             min_count=20,
-            workers=4,
         )
     model.save('text-no-phrases.bin')
 
