@@ -72,11 +72,13 @@ def comment_to_sentences(comment_line):
 def train():
     with open('res/text', 'r') as train_file:
         choo_choo_train = (
-            str(filter(str.isalnum, sentence)) for sentence in train_file
+            ''.join(filter(str.isalnum, sentence)).lower().split(' ')
+            for sentence
+            in train_file
         )
         model = word2vec.Word2Vec(
-            sentences=choo_choo_train.next(),
-            min_count=20,
+            sentences=iter(choo_choo_train),
+            min_count=10,
         )
     model.save('text-no-phrases.bin')
 
