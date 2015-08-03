@@ -100,7 +100,7 @@ def train():
         workers=4,
     )
     model.init_sims(replace=True)
-    model.save('reddit-w2v.bin')
+    model.save('res/reddit-w2v.bin')
 
 
 if __name__ == '__main__':
