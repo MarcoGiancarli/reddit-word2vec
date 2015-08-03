@@ -15,8 +15,8 @@ lmb_training_dir = 'res/language-modeling-benchmark/training/'
 
 
 def main():
-    make_training_file()
-    # train()
+    # make_training_file()
+    train()
 
 
 def make_training_file():
