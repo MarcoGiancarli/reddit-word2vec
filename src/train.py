@@ -9,6 +9,9 @@ from gensim.models import phrases
 from gensim.models import word2vec
 
 
+INPUT_FILE = 'res/sentences.txt'
+OUTPUT_FILE = 'res/reddit-w2v.bin'
+
 comments_dir = 'res/comments/'
 lmb_heldout_dir = 'res/language-modeling-benchmark/heldout/'
 lmb_training_dir = 'res/language-modeling-benchmark/training/'
@@ -41,7 +44,7 @@ def make_training_file():
         in os.listdir(lmb_training_dir)
     ]
 
-    with open('res/sentences.txt', 'w') as training_file:
+    with open(INPUT_FILE, 'w') as training_file:
         for comment_file_name in comment_files:
             with open(comment_file_name, 'r') as comment_file:
                 for line in comment_file:
@@ -90,17 +93,16 @@ def comment_to_sentences(comment_line):
 
 
 def train():
-    # with open('res/sentences.txt', 'r') as train_file:
-    choo_choo_train = word2vec.LineSentence('res/sentences.txt')
+    choo_choo_train = word2vec.LineSentence(INPUT_FILE)
     bigram = phrases.Phrases(sentences=choo_choo_train)
     trigram = phrases.Phrases(sentences=bigram[choo_choo_train])
     model = word2vec.Word2Vec(
         sentences=trigram[choo_choo_train],
-        min_count=15,
+        min_count=10,
         workers=4,
     )
     model.init_sims(replace=True)
-    model.save('res/reddit-w2v.bin')
+    model.save(OUTPUT_FILE)
 
 
 if __name__ == '__main__':
