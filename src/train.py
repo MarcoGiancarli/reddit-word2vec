@@ -94,11 +94,20 @@ def comment_to_sentences(comment_line):
 
 def train():
     choo_choo_train = word2vec.LineSentence(INPUT_FILE)
-    bigram = phrases.Phrases(sentences=choo_choo_train)
-    trigram = phrases.Phrases(sentences=bigram[choo_choo_train])
+    bigram = phrases.Phrases(
+        sentences=choo_choo_train,
+        min_count=50,
+        threshold=10.0,
+    )
+    trigram = phrases.Phrases(
+        sentences=bigram[choo_choo_train],
+        min_count=50,
+        threshold=10.0,
+    )
     model = word2vec.Word2Vec(
         sentences=trigram[choo_choo_train],
-        min_count=10,
+        min_count=100,
+        size=100,
         workers=4,
     )
     model.init_sims(replace=True)
